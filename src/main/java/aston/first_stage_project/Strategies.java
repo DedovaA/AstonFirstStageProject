@@ -1,4 +1,4 @@
-package aston.first_stage_project.quick_sort;
+package aston.first_stage_project;
 
 enum Strategies {
     FROM_FILE("из файла"),
