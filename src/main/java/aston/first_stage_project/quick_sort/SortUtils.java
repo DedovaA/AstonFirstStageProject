@@ -4,6 +4,12 @@ import java.util.List;
 
 public class SortUtils {
     public static <T extends Comparable<T>> void quickSort(List<T> list, int l, int r) {
+        if (list == null) {
+            throw new NullPointerException();
+        } else if (l > r) {
+            throw new IllegalArgumentException();
+        }
+
         int i = l;
         int j = r;
 

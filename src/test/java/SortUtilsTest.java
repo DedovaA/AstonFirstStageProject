@@ -1,4 +1,5 @@
 import aston.first_stage_project.quick_sort.SortUtils;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -7,14 +8,30 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class SortUtilsTest {
+    private List<Integer> list;
+
+    @Before
+    public void init() {
+        list = new ArrayList<>(Arrays.asList(5, 1, 4, 2, 3, 8, 9, 7, 6));
+    }
+
     @Test
     public void testSortWithInteger() {
-        List<Integer> list = new ArrayList<>(Arrays.asList(5, 1, 4, 2, 3, 8, 9, 7, 6));
         List<Integer> result = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
         SortUtils.quickSort(list, 0, list.size() - 1);
 
         assertEquals(result, list);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testSortWithIllegalIndexParams() {
+        SortUtils.quickSort(list, list.size() - 1, 0);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testSortWithNullList() {
+        SortUtils.quickSort(null, 0, list.size() - 1);
     }
 
     // Тест для автобусов
