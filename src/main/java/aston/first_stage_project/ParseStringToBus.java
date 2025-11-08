@@ -1,8 +1,6 @@
 package aston.first_stage_project;
 
-import aston.first_stage_project.exceptions.CustomException;
-import aston.first_stage_project.exceptions.IncorrectRunException;
-import aston.first_stage_project.exceptions.ParametersNumberException;
+import aston.first_stage_project.exceptions.*;
 
 public class ParseStringToBus {
     public static Bus parseStringToBus(String str) {
@@ -13,9 +11,18 @@ public class ParseStringToBus {
         if (busString.length != 3) {
             throw new ParametersNumberException("Передано неверное количество параметров для создания автобуса");
         }
-        String busModel = busString[0].trim();
+        String busModel = busString[0].trim();;
         String busNumber = busString[1].trim();
         int busRun = 0;
+
+        if (busModel == "") {
+            throw new IncorrectModelException("Передано пустое имя модели");
+        }
+
+        if (busNumber == "") {
+            throw new IncorrectNumberException("Передан пустой номер автобуса");
+        }
+
         try {
             busRun = Integer.parseInt(busString[2].trim());
             if (busRun < 0) {
