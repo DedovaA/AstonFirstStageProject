@@ -1,11 +1,12 @@
 package aston.first_stage_project;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
 
     public static void main(String[] args) {
-        Strategies strategyKey = null;
+        List<Bus> list;
         boolean isActive = true;
         try(Scanner scanner = new Scanner(System.in)) {
             while (isActive) {
@@ -23,15 +24,30 @@ public class App {
                 } else {
                     switch (userInput) {
                         case "1" -> {
-                            strategyKey = Strategies.FROM_FILE;
+                            list = new FromFileStrategy().getBusList();
+                            System.out.println("Unsorted list:");
+                            list.forEach(System.out::println);
+                            System.out.println("Sorted list:");
+                            SortUtils.quickSort(list);
+                            list.forEach(System.out::println);
                             isActive = false;
                         }
                         case "2" -> {
-                            strategyKey = Strategies.MANUALLY;
+                            list = new ManuallyStrategy().getBusList();
+                            System.out.println("Unsorted list:");
+                            list.forEach(System.out::println);
+                            System.out.println("Sorted list:");
+                            SortUtils.quickSort(list);
+                            list.forEach(System.out::println);
                             isActive = false;
                         }
                         case "3" -> {
-                            strategyKey = Strategies.RANDOM;
+                            list = new RandomlyStrategy().getBusList();
+                            System.out.println("Unsorted list:");
+                            list.forEach(System.out::println);
+                            System.out.println("Sorted list:");
+                            SortUtils.quickSort(list);
+                            list.forEach(System.out::println);
                             isActive = false;
                         }
                         default -> System.out.println("Неверный ввод, попробуйте еще раз.");
@@ -39,6 +55,5 @@ public class App {
                 }
             }
         }
-        System.out.println(strategyKey);
     }
 }
