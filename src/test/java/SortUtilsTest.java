@@ -19,19 +19,14 @@ public class SortUtilsTest {
     public void testSortWithInteger() {
         List<Integer> result = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
-        SortUtils.quickSort(list, 0, list.size() - 1);
+        SortUtils.quickSort(list);
 
         assertEquals(result, list);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testSortWithIllegalIndexParams() {
-        SortUtils.quickSort(list, list.size() - 1, 0);
-    }
-
     @Test(expected = NullPointerException.class)
     public void testSortWithNullList() {
-        SortUtils.quickSort(null, 0, list.size() - 1);
+        SortUtils.quickSort(null);
     }
 
     // Тест для автобусов

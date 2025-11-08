@@ -3,13 +3,15 @@ package aston.first_stage_project.quick_sort;
 import java.util.List;
 
 public class SortUtils {
-    public static <T extends Comparable<T>> void quickSort(List<T> list, int l, int r) {
+    public static <T extends Comparable<T>> void quickSort(List<T> list) {
         if (list == null) {
             throw new NullPointerException();
-        } else if (l > r) {
-            throw new IllegalArgumentException();
         }
 
+        quickSort(list, 0, list.size() - 1);
+    }
+
+    public static <T extends Comparable<T>> void quickSort(List<T> list, int l, int r) {
         int i = l;
         int j = r;
 
