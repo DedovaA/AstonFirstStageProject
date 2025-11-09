@@ -1,4 +1,4 @@
-import aston.first_stage_project.quick_sort.SortUtils;
+import aston.first_stage_project.SortUtils;
 import org.junit.Before;
 import org.junit.Test;
 
