@@ -35,12 +35,14 @@ public class App {
                         }
                         case "2" -> {
                             list = new ManuallyStrategy().getBusList();
-                            System.out.println("Unsorted list:");
-                            list.forEach(System.out::println);
-                            System.out.println("Sorted list:");
-                            SortUtils.quickSort(list);
-                            list.forEach(System.out::println);
-                            isActive = false;
+                            if(list != null) {
+                                System.out.println("Unsorted list:");
+                                list.forEach(System.out::println);
+                                System.out.println("Sorted list:");
+                                SortUtils.quickSort(list);
+                                list.forEach(System.out::println);
+                                isActive = false;
+                            }
                         }
                         case "3" -> {
                             list = new RandomlyStrategy().getBusList();
