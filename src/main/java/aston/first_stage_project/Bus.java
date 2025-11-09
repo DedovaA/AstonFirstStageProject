@@ -27,32 +27,28 @@ public class Bus implements Comparable<Bus> {
 
     @Override
     public int compareTo(Bus o) {
+        int comparable = compareNullable(this.number, o.number);
+        if (comparable != 0) {
+            return comparable;
+        }
+        comparable = compareNullable(this.model, o.model);
+        if (comparable != 0) {
+            return comparable;
+        }
+        return compareNullable(this.run, o.run);
+    }
 
-        if (this.number == null && o.number == null) {
+    private <T extends Comparable<T>> int compareNullable(T a, T b) {
+        if (a == null && b == null) {
             return 0;
         }
-        if (this.number == null) {
+        if (a == null) {
             return -1;
         }
-        if (o.number == null) {
+        if (b == null) {
             return 1;
         }
-        int i = this.number.compareTo(o.number);
-        if (i != 0) return i;
-
-        if (this.model == null && o.model == null) {
-            return 0;
-        }
-        if (this.model == null) {
-            return -1;
-        }
-        if (o.model == null) {
-            return 1;
-        }
-        int j = this.model.compareTo(o.model);
-        if (j != 0) return j;
-
-        return Integer.compare(this.run, o.run);
+        return a.compareTo(b);
     }
 
     @Override
@@ -85,18 +81,18 @@ public class Bus implements Comparable<Bus> {
         public Bus build() {
             return new Bus(this);
         }
+    }
 
-        @Override
-        public boolean equals(Object o) {
-            if (o == null || getClass() != o.getClass()) return false;
-            BusBuilder that = (BusBuilder) o;
-            return run == that.run && Objects.equals(number, that.number) && Objects.equals(model, that.model);
-        }
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Bus bus = (Bus) o;
+        return getRun() == bus.getRun() && Objects.equals(getNumber(), bus.getNumber()) && Objects.equals(getModel(), bus.getModel());
+    }
 
-        @Override
-        public int hashCode() {
-            return Objects.hash(number, model, run);
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNumber(), getModel(), getRun());
     }
 }
 
