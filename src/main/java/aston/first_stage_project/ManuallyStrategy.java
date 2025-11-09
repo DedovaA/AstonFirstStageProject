@@ -10,37 +10,30 @@ public class ManuallyStrategy implements DataSource{
         List<Bus> buses = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Введите количество автобусов для ввода:");
-        int count = 0;
-        while (true) {
-            String line = scanner.nextLine();
-            try {
-                count = Integer.parseInt(line);
-                if (count <= 0) {
-                    System.out.println("Количество должно быть положительным числом. Попробуйте снова:");
-                    continue;
-                }
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Введите целое число, например: 3");
-            }
+        int count = askBusCount(scanner);
+        if (count == 0) {
+            System.out.println("Возврат в главное меню.");
+            return null;
         }
 
-        System.out.println("Введите данные автобусов в формате: Номер;Модель;Пробег");
-        System.out.println("Пример: A56KW;Volvo;156000");
+        System.out.println("Введите данные автобусов в формате: Номер,Модель,Пробег");
+        System.out.println("Пример: A56KW,Volvo,156000");
+        System.out.println("Для выхода из ввода в любой момент введите 'Q' и нажмите Enter.");
+
 
         int entered = 0;
         while (entered < count) {
             System.out.printf("Автобус %d из %d:%n", entered + 1, count);
             String input = scanner.nextLine().trim();
+
             if (input.equalsIgnoreCase("Q")) {
-                System.out.println("Ввод прерван пользователем.");
-                break;
+                System.out.println("Ввод прерван пользователем. Возврат в главное меню.");
+                return null;
             }
 
-            String[] parts = input.split(";");
+            String[] parts = input.split(",");
             if (parts.length != 3) {
-                System.out.println("Ошибка: ожидалось 3 поля, разделённые ';'. Попробуйте снова.");
+                System.out.println("Ошибка: ожидалось 3 поля, разделённые ','. Попробуйте снова.");
                 continue;
             }
 
@@ -48,7 +41,6 @@ public class ManuallyStrategy implements DataSource{
             String model = parts[1].trim();
             String mileageStr = parts[2].trim();
 
-            // Валидация
             if (number.isEmpty() || model.isEmpty()) {
                 System.out.println("Ошибка: номер и модель не могут быть пустыми. Повторите ввод.");
                 continue;
@@ -66,7 +58,6 @@ public class ManuallyStrategy implements DataSource{
                 continue;
             }
 
-            // Создание через Builder
             Bus bus = new Bus.BusBuilder()
                     .setNumber(number)
                     .setModel(model)
@@ -77,6 +68,31 @@ public class ManuallyStrategy implements DataSource{
         }
 
         System.out.println("Ввод завершён. Получено " + buses.size() + " автобусов.");
+        scanner.close();
         return buses;
+    }
+
+    private int askBusCount(Scanner scanner) {
+        System.out.println("Введите количество автобусов для ввода (или 'Q' для выхода):");
+        int count;
+        while (true) {
+            String line = scanner.nextLine();
+
+            if (line.equalsIgnoreCase("Q")) {
+                return 0;
+            }
+
+            try {
+                count = Integer.parseInt(line);
+                if (count <= 0) {
+                    System.out.println("Количество должно быть положительным числом. Попробуйте снова:");
+                    continue;
+                }
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Введите целое число, например: 3");
+            }
+        }
+        return count;
     }
 }
