@@ -15,11 +15,11 @@ public class ParseStringToBus {
         String busNumber = busString[1].trim();
         int busRun = 0;
 
-        if (busModel == "") {
+        if (busModel.isEmpty()) {
             throw new IncorrectModelException("Передано пустое имя модели");
         }
 
-        if (busNumber == "") {
+        if (busNumber.isEmpty()) {
             throw new IncorrectNumberException("Передан пустой номер автобуса");
         }
 
