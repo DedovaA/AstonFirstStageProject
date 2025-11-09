@@ -23,6 +23,7 @@ public class FromFileStrategy implements DataSource{
                 Допускаются пробелы внутри значений.""");
         Scanner scanner = new Scanner(System.in);
         inputPath = scanner.nextLine();
+        scanner.close();
 
         ArrayList<Bus> result = new ArrayList<>();
         int ExceptionIndex = 0; // Номер строки, на которой может возникнуть ошибка
