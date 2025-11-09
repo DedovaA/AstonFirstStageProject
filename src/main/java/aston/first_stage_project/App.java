@@ -1,7 +1,5 @@
 package aston.first_stage_project;
 
-import aston.first_stage_project.quick_sort.SortUtils;
-
 import java.util.List;
 import java.util.Scanner;
 
