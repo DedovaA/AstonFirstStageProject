@@ -5,7 +5,7 @@ import java.util.List;
 public class SortUtils {
     public static <T extends Comparable<T>> void quickSort(List<T> list) {
         if (list == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("list must not be null");
         }
 
         quickSort(list, 0, list.size() - 1);
