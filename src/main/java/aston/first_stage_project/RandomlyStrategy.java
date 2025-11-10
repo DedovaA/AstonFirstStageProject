@@ -11,22 +11,16 @@ public class RandomlyStrategy implements DataSource{
     //Доступные модели
     public static final String[] MODELS = {"Volvo", "Hyundai", "MAN", "BMW"};
 
-    //Буквы для генерации номеров
-    public static final char[] LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+    //Буквы и цифры для генерации номеров
+    public static final char[] LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".toCharArray();
 
     //Генерация случайного номера
     public static String generateRandomNumber() {
         StringBuilder number = new StringBuilder();
 
-        //Первая буква
-        number.append(LETTERS[random.nextInt(LETTERS.length)]);
-
-        //Две цифры
-        number.append(String.format("%02d", random.nextInt(100)));
-
-        //Две буквы
-        number.append(LETTERS[random.nextInt(LETTERS.length)]);
-        number.append(LETTERS[random.nextInt(LETTERS.length)]);
+        for (int i = 0; i < 6; i++) {
+            number.append(LETTERS[random.nextInt(LETTERS.length)]);
+        }
 
         return number.toString();
     }
