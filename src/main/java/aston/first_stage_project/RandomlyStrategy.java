@@ -76,7 +76,7 @@ public class RandomlyStrategy implements DataSource{
             try {
                 count = Integer.parseInt(line);
                 if (count <= 0) {
-                    System.out.println("Количество должно быть положительным числом. Попробуйте снова:");
+                    System.out.println("Количество должно быть положительным , больше 0. Попробуйте снова:");
                     continue;
                 }
                 break;
