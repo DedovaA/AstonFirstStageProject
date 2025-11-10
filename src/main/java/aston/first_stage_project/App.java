@@ -26,12 +26,14 @@ public class App {
                     switch (userInput) {
                         case "1" -> {
                             list = new FromFileStrategy().getBusList();
-                            System.out.println("Unsorted list:");
-                            list.forEach(System.out::println);
-                            System.out.println("Sorted list:");
-                            SortUtils.quickSort(list);
-                            list.forEach(System.out::println);
-                            isActive = false;
+                            if(list != null) {
+                                System.out.println("Unsorted list:");
+                                list.forEach(System.out::println);
+                                System.out.println("Sorted list:");
+                                SortUtils.quickSort(list);
+                                list.forEach(System.out::println);
+                                isActive = false;
+                            }
                         }
                         case "2" -> {
                             list = new ManuallyStrategy().getBusList();
@@ -46,12 +48,14 @@ public class App {
                         }
                         case "3" -> {
                             list = new RandomlyStrategy().getBusList();
-                            System.out.println("Unsorted list:");
-                            list.forEach(System.out::println);
-                            System.out.println("Sorted list:");
-                            SortUtils.quickSort(list);
-                            list.forEach(System.out::println);
-                            isActive = false;
+                            if(list != null) {
+                                System.out.println("Unsorted list:");
+                                list.forEach(System.out::println);
+                                System.out.println("Sorted list:");
+                                SortUtils.quickSort(list);
+                                list.forEach(System.out::println);
+                                isActive = false;
+                            }
                         }
                         default -> System.out.println("Неверный ввод, попробуйте еще раз.");
                     }
