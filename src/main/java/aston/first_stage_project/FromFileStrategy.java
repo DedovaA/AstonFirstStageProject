@@ -18,12 +18,16 @@ public class FromFileStrategy implements DataSource{
         System.out.println("""
                 Укажите абсолютный путь к файлу с данными об автобусах.
                 Одна строка может содержать данные только об одном автобусе.
-                Строка должна иметь вид:
-                <модель>,<номер>,<пробег>
-                Допускаются пробелы внутри значений.""");
-        Scanner scanner = new Scanner(System.in);
-        inputPath = scanner.nextLine();
-        scanner.close();
+                Строка должна иметь вид: Номер,Модель,Пробег
+                Допускаются пробелы внутри значений.
+                Чтобы выйти в главное меню, введите Q и нажмите Enter.""");
+
+        Scanner fromFileScanner = new Scanner(System.in);
+        inputPath = fromFileScanner.nextLine();
+        if (inputPath.equalsIgnoreCase("Q")) {
+            System.out.println("Ввод прерван пользователем. Возврат в главное меню \n ====================================");
+            return null;
+        }
 
         ArrayList<Bus> result = new ArrayList<>();
         int ExceptionIndex = 0; // Номер строки, на которой может возникнуть ошибка
@@ -34,31 +38,24 @@ public class FromFileStrategy implements DataSource{
                 try {
                     result.add(parseStringToBus(line));
                 }
-                catch (ParametersNumberException e) {
-                    System.out.println("В строке " + ExceptionIndex + " было получено неверное число параметров для создания автобуса. " +
-                            "Строка пропущена.");
-                }
-                catch (IncorrectRunException e) {
-                    System.out.println("В строке " + ExceptionIndex + " было получено значение пробега, не являющееся натуральным числом. " +
-                            "Строка пропущена.");
-                }
-                catch (IncorrectNumberException e) {
-                    System.out.println("В строке " + ExceptionIndex + " было получено пустое значение номера автобуса. " +
-                            "Строка пропущена.");
-                }
-                catch (IncorrectModelException e) {
-                    System.out.println("В строке " + ExceptionIndex + " было получено пустое значение модели автобуса. " +
+                catch (CustomException e) {
+                    System.out.println("Ошибка при чтении строки " + ExceptionIndex + ". " + e.getMessage() +
                             "Строка пропущена.");
                 }
             }
         }
-        catch (IOException e) { //Оборачиваем исключение в кастомное unchecked
-            throw new CustomException("Ошибка при чтении файла " + inputPath + ". " + e.getCause());
+        catch (IOException e) {
+            System.out.println("Ошибка при чтении файла " + inputPath + ". " + e.getMessage());
+            System.out.println("Возврат в главное меню. \n ====================================");
+            return null;
         }
         catch (Exception e) {
-            System.out.println("Мы смогли получить необработанное исключение. " + e.getCause());
+            System.out.println("Мы смогли получить необработанное исключение. " + e.getMessage());
+            System.out.println("Возврат в главное меню. \n ====================================");
+            return null;
         }
         System.out.println("Создан список автобусов с " + result.size() + " автобусами.");
+        fromFileScanner.close();
         return result;
     }
 }
