@@ -1,10 +1,11 @@
 package aston.first_stage_project;
 
+import aston.first_stage_project.exceptions.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ManuallyStrategy implements DataSource{
+public class ManuallyStrategy implements DataSource {
     @Override
     public List<Bus> getBusList() {
         List<Bus> buses = new ArrayList<>();
@@ -17,9 +18,8 @@ public class ManuallyStrategy implements DataSource{
         }
 
         System.out.println("Введите данные автобусов в формате: Номер,Модель,Пробег");
-        System.out.println("Пример: A56KW,Volvo,156000");
+        System.out.println("Пример: A456KW,Volvo,156000");
         System.out.println("Для выхода из ввода в любой момент введите 'Q' и нажмите Enter.");
-
 
         int entered = 0;
         while (entered < count) {
@@ -31,44 +31,16 @@ public class ManuallyStrategy implements DataSource{
                 return null;
             }
 
-            String[] parts = input.split(",");
-            if (parts.length != 3) {
-                System.out.println("Ошибка: ожидалось 3 поля, разделённые ','. Попробуйте снова.");
-                continue;
-            }
-
-            String number = parts[0].trim();
-            String model = parts[1].trim();
-            String mileageStr = parts[2].trim();
-
-            if (number.isEmpty() || model.isEmpty()) {
-                System.out.println("Ошибка: номер и модель не могут быть пустыми. Повторите ввод.");
-                continue;
-            }
-
-            int mileage;
             try {
-                mileage = Integer.parseInt(mileageStr);
-                if (mileage < 0) {
-                    System.out.println("Ошибка: пробег не может быть отрицательным. Повторите ввод.");
-                    continue;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Ошибка: пробег должен быть числом. Повторите ввод.");
-                continue;
+                Bus bus = ParseStringToBus.parseStringToBus(input);
+                buses.add(bus);
+                entered++;
+            } catch (CustomException e) {
+                System.out.println("Ошибка: " + e.getMessage() + "Попробуйте снова.");
             }
-
-            Bus bus = new Bus.BusBuilder()
-                    .setNumber(number)
-                    .setModel(model)
-                    .setRun(mileage)
-                    .build();
-            buses.add(bus);
-            entered++;
         }
 
         System.out.println("Ввод завершён. Получено " + buses.size() + " автобусов.");
-        scanner.close();
         return buses;
     }
 
@@ -86,6 +58,11 @@ public class ManuallyStrategy implements DataSource{
                 count = Integer.parseInt(line);
                 if (count <= 0) {
                     System.out.println("Количество должно быть положительным числом. Попробуйте снова:");
+                    continue;
+                }
+                // Ограничение на количество автобусов (не более 15)
+                if (count > 15) {
+                    System.out.println("Ошибка: количество автобусов не может превышать 15. Введите число от 1 до 15:");
                     continue;
                 }
                 break;
