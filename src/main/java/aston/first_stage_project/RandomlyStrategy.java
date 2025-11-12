@@ -9,7 +9,7 @@ public class RandomlyStrategy implements DataSource{
     public static final Random random = new Random();
 
     //Доступные модели
-    public static final String[] MODELS = {"Volvo", "Hyundai", "MAN", "BMW"};
+    public static final String[] MODELS = {"Volvo", "Hyundai", "MAN", "BMW", null};
 
     //Буквы и цифры для генерации номеров
     public static final char[] LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".toCharArray();
