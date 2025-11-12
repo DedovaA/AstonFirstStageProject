@@ -1,3 +1,4 @@
+import aston.first_stage_project.Bus;
 import aston.first_stage_project.SortUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,35 +30,34 @@ public class SortUtilsTest {
         SortUtils.quickSort(null);
     }
 
-    // Тест для автобусов
-    /*@Test
+    @Test
     public void testSortWithBus() {
         Bus b1 = new Bus.BusBuilder()
-                .setNumber("Н456СТ")
+                .setNumber("N456AS")
                 .setModel("Volvo")
                 .setRun(22134)
                 .build();
 
         Bus b2 = new Bus.BusBuilder()
-                .setNumber("А845КУ")
+                .setNumber("B845CX")
                 .setModel("Toyota")
                 .setRun(12356)
                 .build();
 
         Bus b3 = new Bus.BusBuilder()
-                .setNumber("О154ПР")
+                .setNumber("U154JH")
                 .setModel("Honda")
                 .setRun(84562)
                 .build();
 
         Bus b4 = new Bus.BusBuilder()
-                .setNumber("Г781ИА")
+                .setNumber("J781GH")
                 .setModel("UAZ")
                 .setRun(5623)
                 .build();
 
         Bus b5 = new Bus.BusBuilder()
-                .setNumber("Д850ДС")
+                .setNumber("N456AS")
                 .setModel("Honda")
                 .setRun(98752)
                 .build();
@@ -65,8 +65,8 @@ public class SortUtilsTest {
         List<Bus> list = new ArrayList<>(Arrays.asList(b1, b2, b3, b4, b5));
         List<Bus> result = List.of(b2, b4, b5, b1, b3);
 
-        SortUtils.quickSort(list, 0, list.size() - 1);
+        SortUtils.quickSort(list);
 
         assertEquals(result, list);
-    }*/
+    }
 }
