@@ -28,6 +28,9 @@ public class App {
                         printResult(list);
                         break;
                     }
+                    else {
+                        System.out.println("Получен пустой список автобусов или null. Возврат в главное меню.\n");
+                    }
                 } else {
                     System.out.println("Неверный ввод, попробуйте еще раз.\n");
                 }
