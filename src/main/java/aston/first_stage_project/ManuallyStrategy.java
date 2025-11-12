@@ -107,4 +107,9 @@ public class ManuallyStrategy implements DataSource{
         }
         return count;
     }
+
+    @Override
+    public String toString() {
+        return "Консольный ввод (Manually)";
+    }
 }
