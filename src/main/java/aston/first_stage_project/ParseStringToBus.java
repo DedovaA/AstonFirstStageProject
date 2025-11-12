@@ -7,30 +7,33 @@ public class ParseStringToBus {
 
         //Читает строку формата <модель>,<номер>,<пробег> и возвращает объект Bus
 
-        String[] busString = str.split(","); //Массив строк из поданой на вход строки
+        String[] busString = (str + " ").split(","); //Массив строк из поданой на вход строки
         if (busString.length != 3) {
-            throw new ParametersNumberException("Передано неверное количество параметров для создания автобуса");
+            throw new CustomException("Передано неверное количество параметров для создания автобуса. ");
         }
-        String busModel = busString[0].trim();;
-        String busNumber = busString[1].trim();
+        String busNumber = busString[0].trim();
+        String busModel = busString[1].trim();;
+
         int busRun = 0;
 
-        if (busModel.isEmpty()) {
-            throw new IncorrectModelException("Передано пустое имя модели");
+        if (busModel.length() > 30) {
+            throw new CustomException("Передано слишком длинное имя модели. ");
         }
 
-        if (busNumber.isEmpty()) {
-            throw new IncorrectNumberException("Передан пустой номер автобуса");
+        if (busNumber.length() > 6) {
+            throw new CustomException("Передан слишком длинный номер автобуса. ");
         }
 
-        try {
-            busRun = Integer.parseInt(busString[2].trim());
-            if (busRun < 0) {
-                throw new IncorrectRunException("В качестве пробега передано отрицательное число");
+        String busRunString = busString[2].trim();
+        if (!busRunString.isEmpty()) { //Если передан пустой пробег, то оставляем его нулевым
+            try {
+                busRun = Integer.parseInt(busString[2].trim());
+                if (busRun < 0) {
+                    throw new CustomException("В качестве пробега передано отрицательное число. ");
+                }
+            } catch (NumberFormatException e) {
+                throw new CustomException("В качестве пробега передана строка, не приводимая к int. ");
             }
-        }
-        catch (NumberFormatException e) {
-            throw new IncorrectRunException("В качестве пробега передано число, не приводимое к int");
         }
         return new Bus.BusBuilder().
                 setModel(busModel).

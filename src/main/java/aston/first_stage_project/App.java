@@ -8,9 +8,8 @@ public class App {
 
     public static void main(String[] args) {
         List<Bus> list;
-        boolean isActive = true;
         try(Scanner scanner = new Scanner(System.in)) {
-            while (isActive) {
+            while (true) {
                 System.out.println("""
                         Выберите источник ввода данных для сортировки:
                         1 - из файла,
@@ -22,41 +21,29 @@ public class App {
                 if (userInput.equalsIgnoreCase("Q")) {
                     System.out.println("Выход из программы.");
                     return;
-                } else {
-                    switch (userInput) {
-                        case "1" -> {
-                            list = new FromFileStrategy().getBusList();
-                            System.out.println("Unsorted list:");
-                            list.forEach(System.out::println);
-                            System.out.println("Sorted list:");
-                            SortUtils.quickSort(list);
-                            list.forEach(System.out::println);
-                            isActive = false;
-                        }
-                        case "2" -> {
-                            list = new ManuallyStrategy().getBusList();
-                            if(list != null) {
-                                System.out.println("Unsorted list:");
-                                list.forEach(System.out::println);
-                                System.out.println("Sorted list:");
-                                SortUtils.quickSort(list);
-                                list.forEach(System.out::println);
-                                isActive = false;
-                            }
-                        }
-                        case "3" -> {
-                            list = new RandomlyStrategy().getBusList();
-                            System.out.println("Unsorted list:");
-                            list.forEach(System.out::println);
-                            System.out.println("Sorted list:");
-                            SortUtils.quickSort(list);
-                            list.forEach(System.out::println);
-                            isActive = false;
-                        }
-                        default -> System.out.println("Неверный ввод, попробуйте еще раз.");
+                }
+                switch (userInput) {
+                    case "1" -> list = new FromFileStrategy().getBusList();
+                    case "2" -> list = new ManuallyStrategy().getBusList();
+                    case "3" -> list = new RandomlyStrategy().getBusList();
+                    default -> {
+                        System.out.println("Неверный ввод, попробуйте еще раз.");
+                        continue;
                     }
+                }
+                if (list != null) {
+                    printResult(list);
+                    break;
                 }
             }
         }
+    }
+
+    private static void printResult(List<Bus> list) {
+        System.out.println("Unsorted list:");
+        list.forEach(System.out::println);
+        System.out.println("Sorted list:");
+        SortUtils.quickSort(list);
+        list.forEach(System.out::println);
     }
 }
