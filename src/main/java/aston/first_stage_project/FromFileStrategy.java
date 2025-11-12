@@ -55,7 +55,12 @@ public class FromFileStrategy implements DataSource{
             return null;
         }
         System.out.println("Создан список автобусов с " + result.size() + " автобусами.");
-        fromFileScanner.close();
+//        fromFileScanner.close();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Из файла (FromFile)";
     }
 }
