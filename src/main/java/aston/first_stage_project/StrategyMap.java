@@ -4,17 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StrategyMap {
-    private DataSource[] strategyArr;
+    private final Map<String, DataSource> map = new HashMap<>();
 
     public StrategyMap(DataSource[] strategyArr) {
-        this.strategyArr = strategyArr;
+        for (int i = 0; i < strategyArr.length; i++) {
+            map.put(String.valueOf(i + 1), strategyArr[i]);
+        }
     }
 
-    Map<String, DataSource> getMap() {
-        Map<String, DataSource> map = new HashMap<>();
-        for (int i = 0; i < this.strategyArr.length; i++) {
-            map.put(String.valueOf(i + 1), this.strategyArr[i]);
-        }
+    public Map<String, DataSource> getMap() {
         return map;
     }
 }
