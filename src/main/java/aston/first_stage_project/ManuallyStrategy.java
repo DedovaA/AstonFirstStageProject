@@ -1,10 +1,11 @@
 package aston.first_stage_project;
 
+import aston.first_stage_project.exceptions.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ManuallyStrategy implements DataSource{
+public class ManuallyStrategy implements DataSource {
     @Override
     public List<Bus> getBusList() {
         List<Bus> buses = new ArrayList<>();
@@ -20,7 +21,6 @@ public class ManuallyStrategy implements DataSource{
         System.out.println("Пример: A456KW,Volvo,156000");
         System.out.println("Для выхода из ввода в любой момент введите 'Q' и нажмите Enter.");
 
-
         int entered = 0;
         while (entered < count) {
             System.out.printf("Автобус %d из %d:%n", entered + 1, count);
@@ -31,51 +31,16 @@ public class ManuallyStrategy implements DataSource{
                 return null;
             }
 
-            String[] parts = input.split(",");
-            if (parts.length != 3) {
-                System.out.println("Ошибка: ожидалось 3 поля, разделённые ','. Попробуйте снова.");
-                continue;
-            }
-
-            String number = parts[0].trim();
-            String model = parts[1].trim();
-            String mileageStr = parts[2].trim();
-
-            // Проверка номера (ровно 6 символов)
-            if (number.length() != 6) {
-                System.out.println("Ошибка: номер должен содержать ровно 6 символов. Повторите ввод.");
-                continue;
-            }
-
-            // Проверка модели (не более 30 символов)
-            if (model.isEmpty() || model.length() > 30) {
-                System.out.println("Ошибка: модель должна содержать не более 30 символов. Повторите ввод.");
-                continue;
-            }
-
-            int mileage;
             try {
-                mileage = Integer.parseInt(mileageStr);
-                if (mileage < 0) {
-                    System.out.println("Ошибка: пробег не может быть отрицательным. Повторите ввод.");
-                    continue;
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Ошибка: пробег должен быть числом. Повторите ввод.");
-                continue;
+                Bus bus = ParseStringToBus.parseStringToBus(input);
+                buses.add(bus);
+                entered++;
+            } catch (CustomException e) {
+                System.out.println("Ошибка: " + e.getMessage() + "Попробуйте снова.");
             }
-
-            Bus bus = new Bus.BusBuilder()
-                    .setNumber(number)
-                    .setModel(model)
-                    .setRun(mileage)
-                    .build();
-            buses.add(bus);
-            entered++;
         }
 
         System.out.println("Ввод завершён. Получено " + buses.size() + " автобусов.");
-        scanner.close();
         return buses;
     }
 
