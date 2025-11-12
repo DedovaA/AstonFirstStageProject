@@ -24,8 +24,7 @@ public class App {
                 }
                 if (strategyMap.containsKey(input)) {
                     list = strategyMap.get(input).getBusList();
-//                    if (list != null && !list.isEmpty()) {
-                    if (list != null) {
+                    if (list != null && !list.isEmpty()) {
                         printResult(list);
                         break;
                     }
