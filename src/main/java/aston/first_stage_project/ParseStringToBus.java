@@ -5,8 +5,6 @@ import aston.first_stage_project.exceptions.*;
 public class ParseStringToBus {
     public static Bus parseStringToBus(String str) {
 
-        //Читает строку формата <модель>,<номер>,<пробег> и возвращает объект Bus
-
         String[] busString = (str + " ").split(","); //Массив строк из поданой на вход строки
         if (busString.length != 3) {
             throw new CustomException("Передано неверное количество параметров для создания автобуса. ");

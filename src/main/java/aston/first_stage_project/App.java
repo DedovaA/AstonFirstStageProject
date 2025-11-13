@@ -5,12 +5,12 @@ import java.util.*;
 public class App {
 
     public static void main(String[] args) {
-        StrategyMap strategyMap = new StrategyMap();
-        strategyMap.addStrategy("F", new MapEntry(new FromFileStrategy(), "Из файла"));
-        strategyMap.addStrategy("M", new MapEntry(new ManuallyStrategy(), "Консольный ввод"));
-        strategyMap.addStrategy("R", new MapEntry(new RandomlyStrategy(), "Рандомная генерация"));
+        Map<String, MapEntry> strategies = new HashMap<>();
+        strategies.put("F", new MapEntry(new FromFileStrategy(), "Из файла"));
+        strategies.put("M", new MapEntry(new ManuallyStrategy(), "Консольный ввод"));
+        strategies.put("R", new MapEntry(new RandomlyStrategy(), "Рандомная генерация"));
 
-        String mainMenuMessage = new MainMenu(strategyMap).getMenu();
+        String mainMenuMessage = new MainMenu(strategies).getMenu();
 
         List<Bus> list;
 
@@ -23,8 +23,8 @@ public class App {
                     System.out.println("Выход из программы.");
                     return;
                 }
-                if (strategyMap.getStrategyMap().containsKey(input)) {
-                    list = strategyMap.getStrategyMap().get(input).getStrategy().getBusList();
+                if (strategies.containsKey(input)) {
+                    list = strategies.get(input).getStrategy().getBusList();
                     if (list != null && !list.isEmpty()) {
                         printResult(list);
                         break;
