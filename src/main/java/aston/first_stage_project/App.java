@@ -5,28 +5,32 @@ import java.util.*;
 public class App {
 
     public static void main(String[] args) {
-        Map<String, MapEntry> strategies = new HashMap<>();
-        strategies.put("F", new MapEntry(new FromFileStrategy(), "Из файла"));
-        strategies.put("M", new MapEntry(new ManuallyStrategy(), "Консольный ввод"));
-        strategies.put("R", new MapEntry(new RandomlyStrategy(), "Рандомная генерация"));
 
-        String mainMenuMessage = new MainMenu(strategies).getMenu();
+        List<MenuEntry> menuEntryList = Arrays.asList(
+                new MenuEntry("1", "Из файла", new FromFileStrategy()),
+                new MenuEntry("2", "Консольный ввод", new ManuallyStrategy()),
+                new MenuEntry("3", "Рандомная генерация", new RandomlyStrategy())
+            );
 
-        List<Bus> list;
+        Map<String, MenuEntry> strategyMap = new HashMap<>();
+        menuEntryList.forEach(element -> strategyMap.put(element.getKey(), element));
 
+        String mainMenuMessage = new MainMenu(menuEntryList).getMenu();
+
+        List<Bus> busList;
         try (Scanner scanner = new Scanner(System.in)) {
-            String input;
+            String userInput;
             while (true) {
                 System.out.println(mainMenuMessage);
-                input = scanner.nextLine().trim();
-                if (input.equalsIgnoreCase("Q")) {
+                userInput = scanner.nextLine().trim();
+                if (userInput.equalsIgnoreCase("Q")) {
                     System.out.println("Выход из программы.");
                     return;
                 }
-                if (strategies.containsKey(input)) {
-                    list = strategies.get(input).getStrategy().getBusList();
-                    if (list != null && !list.isEmpty()) {
-                        printResult(list);
+                if (strategyMap.containsKey(userInput)) {
+                    busList = strategyMap.get(userInput).getValue().getBusList();
+                    if (busList != null && !busList.isEmpty()) {
+                        printResult(busList);
                         break;
                     }
                 } else {

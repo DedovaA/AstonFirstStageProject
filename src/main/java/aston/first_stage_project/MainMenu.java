@@ -1,18 +1,18 @@
 package aston.first_stage_project;
 
-import java.util.Map;
+import java.util.List;
 
 class MainMenu {
-    private final Map<String, MapEntry> strategyMap;
+    List<MenuEntry> menuEntryList;
 
-    public MainMenu(Map<String, MapEntry> strategyMap) {
-        this.strategyMap = strategyMap;
+    public MainMenu(List<MenuEntry> listStrategy) {
+        this.menuEntryList = listStrategy;
     }
 
     String getMenu() {
         StringBuilder message = new StringBuilder("Выберите источник ввода данных для сортировки:\n");
-        for(Map.Entry<String, MapEntry> entry:strategyMap.entrySet()) {
-            message.append(entry.getKey()).append(" - ").append(entry.getValue().getDescription()).append("\n");
+        for(MenuEntry entry: menuEntryList) {
+            message.append(entry.getKey()).append(" - ").append(entry.getDesc()).append("\n");
         }
         message.append("Для выхода из программы введите Q.");
         return message.toString();

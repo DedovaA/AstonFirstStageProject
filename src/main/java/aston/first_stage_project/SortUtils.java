@@ -12,13 +12,13 @@ public class SortUtils {
     }
 
     public static <T extends Comparable<T>> void quickSort(List<T> list, int l, int r) {
-        int i = l;//первый
-        int j = r;//последний
+        int i = l;
+        int j = r;
 
-        T pivot = list.get((i + j) / 2);//из середины
+        T pivot = list.get((i + j) / 2);
 
         while (i < j) {
-            while (list.get(i).compareTo(pivot) < 0) {//если первый элемент
+            while (list.get(i).compareTo(pivot) < 0) {
                 i++;
             }
 
@@ -35,11 +35,11 @@ public class SortUtils {
             }
         }
 
-        if (l < j) {//базовое условие
+        if (l < j) {
             quickSort(list, l, j);
         }
 
-        if (i < r) {//базовое условие
+        if (i < r) {
             quickSort(list, i, r);
         }
     }
