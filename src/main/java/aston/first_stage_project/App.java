@@ -1,16 +1,17 @@
 package aston.first_stage_project;
 
-import java.util.List;
-
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class App {
-    private static final DataSource[] strategyArr = {new FromFileStrategy(),new ManuallyStrategy(),new RandomlyStrategy()};
 
     public static void main(String[] args) {
-        Map<String, DataSource> strategyMap = new StrategyMap(strategyArr).getMap();
-        String mainMenuMessage = new MainMenu(strategyArr).getMenu();
+        StrategyMap strategyMap = new StrategyMap();
+        strategyMap.addStrategy("F", new MapEntry(new FromFileStrategy(), "Из файла"));
+        strategyMap.addStrategy("M", new MapEntry(new ManuallyStrategy(), "Консольный ввод"));
+        strategyMap.addStrategy("R", new MapEntry(new RandomlyStrategy(), "Рандомная генерация"));
+
+        String mainMenuMessage = new MainMenu(strategyMap).getMenu();
+
         List<Bus> list;
 
         try (Scanner scanner = new Scanner(System.in)) {
@@ -22,8 +23,8 @@ public class App {
                     System.out.println("Выход из программы.");
                     return;
                 }
-                if (strategyMap.containsKey(input)) {
-                    list = strategyMap.get(input).getBusList();
+                if (strategyMap.getStrategyMap().containsKey(input)) {
+                    list = strategyMap.getStrategyMap().get(input).getStrategy().getBusList();
                     if (list != null && !list.isEmpty()) {
                         printResult(list);
                         break;
