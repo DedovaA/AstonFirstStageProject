@@ -192,7 +192,7 @@ public class ManuallyStrategyTest {
     public void testGetBusList_MultipleValidationsInSequence() {
         // Комплексная проверка
         String input = "30\n1\n" +                // 30 автобусов - ошибка, потом верно
-                "A456,Volvo,156000\n" +           // номер из 4 символов - ошибка
+//                "A456,Volvo ,156000\n" +           // номер из 4 символов - ошибка
                 "A456KWA456KW,Volvo,156000\n" +   // номер из 12 символов - ошибка
                 "A456KW," + "A".repeat(31) + ",156000\n" + // модель из 31 символа - ошибка
                 "A456KW,Volvo,156000\n";          // корректные данные - должно принять

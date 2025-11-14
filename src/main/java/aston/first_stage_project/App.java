@@ -1,33 +1,35 @@
 package aston.first_stage_project;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class App {
 
     public static void main(String[] args) {
+        int i = 1;
 
         List<MenuEntry> menuEntryList = Arrays.asList(
-                new MenuEntry("1", "Из файла", new FromFileStrategy()),
-                new MenuEntry("2", "Консольный ввод", new ManuallyStrategy()),
-                new MenuEntry("3", "Рандомная генерация", new RandomlyStrategy())
+                new MenuEntry(String.valueOf(i++), "Из файла", new FromFileStrategy()),
+                new MenuEntry(String.valueOf(i++), "Консольный ввод", new ManuallyStrategy()),
+                new MenuEntry(String.valueOf(i++), "Рандомная генерация", new RandomlyStrategy())
             );
 
-        Map<String, MenuEntry> strategyMap = new HashMap<>();
-        menuEntryList.forEach(element -> strategyMap.put(element.getKey(), element));
+        Map<String, MenuEntry> strategyMap = menuEntryList.stream()
+                .collect(Collectors.toMap(MenuEntry::getKey, entry -> entry));
 
-        String mainMenuMessage = new MainMenu(menuEntryList).getMenu();
+        MainMenu menu = new MainMenu(menuEntryList, "Q");
 
         List<Bus> busList;
         try (Scanner scanner = new Scanner(System.in)) {
             String userInput;
             while (true) {
-                System.out.println(mainMenuMessage);
+                System.out.println(menu.getText());
                 userInput = scanner.nextLine().trim();
-                if (userInput.equalsIgnoreCase("Q")) {
+                if (menu.isQuitKey(userInput)) {
                     System.out.println("Выход из программы.");
                     return;
                 }
-                if (strategyMap.containsKey(userInput)) {
+                if (menu.isValidKey(userInput)) {
                     busList = strategyMap.get(userInput).getValue().getBusList();
                     if (busList != null && !busList.isEmpty()) {
                         printResult(busList);
@@ -41,9 +43,9 @@ public class App {
     }
 
     private static void printResult(List<Bus> list) {
-        System.out.println("\nUnsorted list:");
+        System.out.println("\n========= Unsorted list: =========");
         list.forEach(System.out::println);
-        System.out.println("Sorted list:");
+        System.out.println("\n========= Sorted list: =========");
         SortUtils.quickSort(list);
         list.forEach(System.out::println);
     }

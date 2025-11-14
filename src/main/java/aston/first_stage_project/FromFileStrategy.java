@@ -58,8 +58,4 @@ public class FromFileStrategy implements DataSource{
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "Из файла (FromFile)";
-    }
 }

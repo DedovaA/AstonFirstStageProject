@@ -87,8 +87,4 @@ public class RandomlyStrategy implements DataSource{
         return count;
     }
 
-    @Override
-    public String toString() {
-        return "Рандомная генерация (Randomly)";
-    }
 }
